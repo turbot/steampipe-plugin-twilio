@@ -6,19 +6,23 @@ import (
 )
 
 type twilioConfig struct {
-	Username   *string `cty:"username"`
-	Password   *string `cty:"password"`
 	AccountSid *string `cty:"account_sid"`
+	AuthToken  *string `cty:"auth_token"`
+	ApiKey     *string `cty:"api_key"`
+	ApiSecret  *string `cty:"api_secret"`
 }
 
 var ConfigSchema = map[string]*schema.Attribute{
-	"username": {
-		Type: schema.TypeString,
-	},
-	"password": {
-		Type: schema.TypeString,
-	},
 	"account_sid": {
+		Type: schema.TypeString,
+	},
+	"auth_token": {
+		Type: schema.TypeString,
+	},
+	"api_key": {
+		Type: schema.TypeString,
+	},
+	"api_secret": {
 		Type: schema.TypeString,
 	},
 }

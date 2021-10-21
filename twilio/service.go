@@ -17,45 +17,67 @@ func getSessionConfig(ctx context.Context, d *plugin.QueryData) (*twilio.RestCli
 		return cachedData.(*twilio.RestClient), nil
 	}
 
-	var username, password, accountSid string
+	var accountSid, authToken, apiKey, apiSecret string
 
 	// Get twilio config
 	twilioConfig := GetConfig(d.Connection)
-
-	if twilioConfig.Username != nil {
-		username = *twilioConfig.Username
-	}
-
-	if twilioConfig.Password != nil {
-		password = *twilioConfig.Password
-	}
 
 	if twilioConfig.AccountSid != nil {
 		accountSid = *twilioConfig.AccountSid
 	}
 
-	// Check for API key and Secret
-	if username == "" && password == "" {
-		username = os.Getenv("TWILIO_API_KEY")
-		password = os.Getenv("TWILIO_API_SECRET")
+	if accountSid == "" {
+		accountSid = os.Getenv("TWILIO_ACCOUNT_SID")
 	}
 
-	// Check for Account SID and Auth token
-	if username == "" && password == "" {
-		username = os.Getenv("TWILIO_ACCOUNT_SID")
-		password = os.Getenv("TWILIO_AUTH_TOKEN")
+	if accountSid == "" {
+		return nil, fmt.Errorf("account_sid must be configured")
+	}
+
+	if twilioConfig.AuthToken != nil {
+		authToken = *twilioConfig.AuthToken
+	}
+
+	if twilioConfig.ApiKey != nil {
+		apiKey = *twilioConfig.ApiKey
+	}
+
+	if twilioConfig.ApiSecret != nil {
+		apiSecret = *twilioConfig.ApiSecret
+	}
+
+	// Check for environment variables
+	if apiKey == "" {
+		apiKey = os.Getenv("TWILIO_API_KEY")
+	}
+
+	if apiSecret == "" {
+		apiSecret = os.Getenv("TWILIO_API_SECRET")
+	}
+
+	if authToken == "" {
+		authToken = os.Getenv("TWILIO_AUTH_TOKEN")
+	}
+
+	
+	clientReq := twilio.RestClientParams{}
+	if authToken != "" {
+		clientReq.Username = accountSid
+		clientReq.Password = authToken
+	}
+
+	if apiKey != "" && apiSecret != "" {
+		clientReq.Username = apiKey
+		clientReq.Password = apiSecret
+		clientReq.AccountSid = accountSid
 	}
 
 	// No creds
-	if username == "" && password == "" {
-		return nil, fmt.Errorf("both username and password must be configured")
+	if clientReq.Username == "" && clientReq.Password == "" {
+		return nil, fmt.Errorf("either api_key and api_secret or auth_token must be configured")
 	}
 
-	client := twilio.NewRestClientWithParams(twilio.RestClientParams{
-		Username:   username,
-		Password:   password,
-		AccountSid: accountSid,
-	})
+	client := twilio.NewRestClientWithParams(clientReq)
 
 	// save clientOptions in cache
 	d.ConnectionManager.Cache.Set(sessionCacheKey, client)

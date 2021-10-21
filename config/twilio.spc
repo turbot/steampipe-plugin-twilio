@@ -1,13 +1,13 @@
 connection "twilio" {
-  plugin  = "twilio"
+  plugin = "twilio"
 
-  # Set the static credential with the `username` and `password` arguments.
-  # Authenticate using AccountSId and Authorization token
-  username = "YOUR_ACCOUNT_SID"
-  password = "YOUR_AUTH_TOKEN"
-
-  # Authenticate using API Key and Secret
-  username    = "YOUR_API_KEY"
-  password    = "YOUR_API_SECRET"
+  # Required
   account_sid = "YOUR_ACCOUNT_SID"
+
+  # Option1 - Authenticate using Authorization Token
+  # auth_token = "YOUR_AUTH_TOKEN"
+
+  # Option2 - Authenticate using API Key and API Secret
+  # api_key    = "YOUR_API_KEY"
+  # api_secret = "YOUR_API_SECRET"
 }
