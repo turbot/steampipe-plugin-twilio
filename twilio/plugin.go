@@ -23,9 +23,13 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		},
 		TableMap: map[string]*plugin.Table{
 			"twilio_account":                       tableTwilioAccount(ctx),
+			"twilio_account_call":                  tableTwilioAccountCall(ctx),
 			"twilio_account_incoming_phone_number": tableTwilioAccountIncomingPhoneNumber(ctx),
 			"twilio_account_key":                   tableTwilioAccountKey(ctx),
 			"twilio_account_message":               tableTwilioAccountMessage(ctx),
+			"twilio_chat_service":                  tableTwilioChatService(ctx),
+			"twilio_chat_service_user":             tableTwilioChatServiceUser(ctx),
+			"twilio_messaging_service":             tableTwilioMessagingService(ctx),
 		},
 	}
 

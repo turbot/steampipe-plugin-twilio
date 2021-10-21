@@ -162,12 +162,12 @@ func listAccountMessages(ctx context.Context, d *plugin.QueryData, _ *plugin.Hyd
 	req := &openapi.ListMessageParams{}
 
 	// Additional filters
-	if d.KeyColumnQuals["from"] != nil {
-		req.SetFrom(d.KeyColumnQuals["from"].GetStringValue())
+	if d.KeyColumnQuals["sent_from"] != nil {
+		req.SetFrom(d.KeyColumnQuals["sent_from"].GetStringValue())
 	}
 
-	if d.KeyColumnQuals["to"] != nil {
-		req.SetTo(d.KeyColumnQuals["to"].GetStringValue())
+	if d.KeyColumnQuals["sent_to"] != nil {
+		req.SetTo(d.KeyColumnQuals["sent_to"].GetStringValue())
 	}
 
 	if d.Quals["date_sent"] != nil {

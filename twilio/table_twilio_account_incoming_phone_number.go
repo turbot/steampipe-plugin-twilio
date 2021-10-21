@@ -112,6 +112,11 @@ func tableTwilioAccountIncomingPhoneNumber(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 			},
 			{
+				Name:        "emergency_address_status",
+				Description: "State of the emergency address configuration for the phone number.",
+				Type:        proto.ColumnType_STRING,
+			},
+			{
 				Name:        "emergency_status",
 				Description: "Displays if emergency calling is enabled for this number.",
 				Type:        proto.ColumnType_STRING,
