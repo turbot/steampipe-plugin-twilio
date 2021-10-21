@@ -2,7 +2,7 @@
 
 # Twilio Plugin for Steampipe
 
-Use SQL to query infrastructure servers, networks, databases and more from your Twilio account.
+Use SQL to query calls, messages and other communication functions from your Twilio account.
 
 - **[Get started →](https://hub.steampipe.io/plugins/turbot/twilio)**
 - Documentation: [Table definitions & examples](https://hub.steampipe.io/plugins/turbot/twilio/tables)
