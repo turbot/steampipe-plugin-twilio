@@ -2,7 +2,7 @@
 organization: Turbot
 category: ["media"]
 icon_url: "/images/plugins/turbot/twilio.svg"
-brand_color: "#E30810"
+brand_color: "#F22F46"
 display_name: "Twilio"
 short_name: "twilio"
 description: "Steampipe plugin to query calls, messages and other communication functions from your Twilio project."
