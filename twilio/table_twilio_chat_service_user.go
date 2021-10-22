@@ -134,6 +134,9 @@ func listChatServiceUsers(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 
 	resp, err := client.ChatV2.ListUser(*chatServiceSid, req)
 	if err != nil {
+		if handleListError(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 

@@ -128,6 +128,9 @@ func listTwilioAccounts(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 
 	resp, err := client.ApiV2010.ListAccount(req)
 	if err != nil {
+		if handleListError(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 

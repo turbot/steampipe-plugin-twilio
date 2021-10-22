@@ -104,6 +104,9 @@ func listServerlessServiceFunctions(ctx context.Context, d *plugin.QueryData, h 
 
 	resp, err := client.ServerlessV1.ListFunction(*serviceID, req)
 	if err != nil {
+		if handleListError(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 

@@ -166,6 +166,9 @@ func listMessagingServices(ctx context.Context, d *plugin.QueryData, _ *plugin.H
 
 	resp, err := client.MessagingV1.ListService(req)
 	if err != nil {
+		if handleListError(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 

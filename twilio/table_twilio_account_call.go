@@ -259,6 +259,9 @@ func listAccountCalls(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydrat
 
 	resp, err := client.ApiV2010.ListCall(req)
 	if err != nil {
+		if handleListError(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 

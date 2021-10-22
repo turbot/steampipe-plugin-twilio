@@ -197,6 +197,9 @@ func listAccountMessages(ctx context.Context, d *plugin.QueryData, _ *plugin.Hyd
 
 	resp, err := client.ApiV2010.ListMessage(req)
 	if err != nil {
+		if handleListError(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 

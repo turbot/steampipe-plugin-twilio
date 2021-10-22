@@ -277,6 +277,9 @@ func listAccountIncomingPhoneNumbers(ctx context.Context, d *plugin.QueryData, _
 
 	resp, err := client.ApiV2010.ListIncomingPhoneNumber(req)
 	if err != nil {
+		if handleListError(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 

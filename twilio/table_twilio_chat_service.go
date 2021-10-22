@@ -170,6 +170,9 @@ func listChatServices(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydrat
 
 	resp, err := client.ChatV2.ListService(req)
 	if err != nil {
+		if handleListError(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 

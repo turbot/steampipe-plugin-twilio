@@ -10,8 +10,8 @@ import (
 // function which returns an IsNotFoundErrorPredicate for Twilio API calls
 func isNotFoundError(notFoundErrors []string) plugin.ErrorPredicate {
 	return func(err error) bool {
-		if gerr, ok := err.(*twilioclient.TwilioRestError); ok {
-			return helpers.StringSliceContains(notFoundErrors, types.ToString(gerr.Status))
+		if twilioErr, ok := err.(*twilioclient.TwilioRestError); ok {
+			return helpers.StringSliceContains(notFoundErrors, types.ToString(twilioErr.Status))
 		}
 		return false
 	}

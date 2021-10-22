@@ -78,6 +78,9 @@ func listTwilioAccountKeys(ctx context.Context, d *plugin.QueryData, _ *plugin.H
 
 	resp, err := client.ApiV2010.ListKey(req)
 	if err != nil {
+		if handleListError(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 
