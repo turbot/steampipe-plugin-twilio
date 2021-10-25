@@ -15,19 +15,10 @@ import (
 func tableTwilioAccount(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "twilio_account",
-		Description: "The set of Accounts belonging to the Twilio Account.",
+		Description: "Retrieve the current Twilio Account.",
 		List: &plugin.ListConfig{
-			Hydrate: listTwilioAccounts,
-			KeyColumns: []*plugin.KeyColumn{
-				{
-					Name:    "friendly_name",
-					Require: plugin.Optional,
-				},
-				{
-					Name:    "status",
-					Require: plugin.Optional,
-				},
-			},
+			Hydrate:           listTwilioAccount,
+			ShouldIgnoreError: isNotFoundError([]string{"404"}),
 		},
 		Columns: []*plugin.Column{
 			{
@@ -54,6 +45,12 @@ func tableTwilioAccount(_ context.Context) *plugin.Table {
 				Name:        "owner_account_sid",
 				Description: "The unique string representing the parent of this account.",
 				Type:        proto.ColumnType_STRING,
+			},
+			{
+				Name:        "is_sub_account",
+				Description: "Indicates whether this account is a sub-account, or not.",
+				Type:        proto.ColumnType_BOOL,
+				Transform:   transform.From(checkTwilioSubAccount),
 			},
 			{
 				Name:        "uri",
@@ -97,53 +94,27 @@ func tableTwilioAccount(_ context.Context) *plugin.Table {
 
 //// LIST FUNCTION
 
-func listTwilioAccounts(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listTwilioAccount(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getSessionConfig(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("twilio_account.listTwilioAccounts", "connection_error", err)
+		plugin.Logger(ctx).Error("twilio_account.listTwilioAccount", "connection_error", err)
 		return nil, err
 	}
 
-	req := &openapi.ListAccountParams{}
-
-	// Additional filters
-	if d.KeyColumnQuals["friendly_name"] != nil {
-		req.SetFriendlyName(d.KeyColumnQuals["friendly_name"].GetStringValue())
-	}
-
-	if d.KeyColumnQuals["status"] != nil {
-		req.SetStatus(d.KeyColumnQuals["status"].GetStringValue())
-	}
-
-	// Retrieve the list of Accounts
-	maxResult := 50
-
-	// Reduce the basic request limit down if the user has only requested a small number of rows
-	limit := d.QueryContext.Limit
-	if d.QueryContext.Limit != nil {
-		if int(*limit) < maxResult {
-			maxResult = int(*limit)
-		}
-	}
-	req.SetLimit(maxResult)
-
-	resp, err := client.ApiV2010.ListAccount(req)
+	resp, err := client.ApiV2010.FetchAccount(client.Client.AccountSid())
 	if err != nil {
-		if handleListError(err) {
-			return nil, nil
-		}
 		return nil, err
 	}
-
-	for _, acc := range resp {
-		d.StreamListItem(ctx, acc)
-
-		// Context can be cancelled due to manual cancellation or the limit has been hit
-		if d.QueryStatus.RowsRemaining(ctx) == 0 {
-			return nil, nil
-		}
-	}
+	d.StreamListItem(ctx, resp)
 
 	return nil, nil
+}
+
+//// TRANSFORM FUNCTIONS
+
+func checkTwilioSubAccount(_ context.Context, d *transform.TransformData) (interface{}, error) {
+	data := d.HydrateItem.(*openapi.ApiV2010Account)
+
+	return *data.OwnerAccountSid != *data.Sid, nil
 }
