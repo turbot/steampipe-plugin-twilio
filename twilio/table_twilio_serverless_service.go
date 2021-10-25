@@ -45,11 +45,6 @@ func tableTwilioServerlessService(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_TIMESTAMP,
 			},
 			{
-				Name:        "account_sid",
-				Description: "The SID of the Account that created the resource.",
-				Type:        proto.ColumnType_STRING,
-			},
-			{
 				Name:        "domain_base",
 				Description: "The base domain name for this Service, which is a combination of the unique name and a randomly generated string.",
 				Type:        proto.ColumnType_STRING,
@@ -79,11 +74,20 @@ func tableTwilioServerlessService(_ context.Context) *plugin.Table {
 				Description: "A list of URLs of the Service's nested resources.",
 				Type:        proto.ColumnType_JSON,
 			},
+
+			// Steampipe standard columns
 			{
 				Name:        "title",
 				Description: "Title of the resource.",
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromField("FriendlyName"),
+			},
+
+			// Twilio standard columns
+			{
+				Name:        "account_sid",
+				Description: "The SID of the Account that created the resource.",
+				Type:        proto.ColumnType_STRING,
 			},
 		},
 	}

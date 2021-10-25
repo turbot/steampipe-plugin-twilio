@@ -45,11 +45,6 @@ func tableTwilioChatService(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_TIMESTAMP,
 			},
 			{
-				Name:        "account_sid",
-				Description: "The SID of the Account that created the resource.",
-				Type:        proto.ColumnType_STRING,
-			},
-			{
 				Name:        "default_channel_creator_role_sid",
 				Description: "The channel role assigned to a channel creator when they join a new channel.",
 				Type:        proto.ColumnType_STRING,
@@ -134,11 +129,20 @@ func tableTwilioChatService(_ context.Context) *plugin.Table {
 				Description: "The list of webhook events that are enabled for this Service instance.",
 				Type:        proto.ColumnType_JSON,
 			},
+
+			// Steampipe standard columns
 			{
 				Name:        "title",
 				Description: "Title of the resource.",
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromField("FriendlyName"),
+			},
+
+			// Twilio standard columns
+			{
+				Name:        "account_sid",
+				Description: "The SID of the Account that created the resource.",
+				Type:        proto.ColumnType_STRING,
 			},
 		},
 	}

@@ -65,11 +65,6 @@ func tableTwilioAccountIncomingPhoneNumber(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 			},
 			{
-				Name:        "account_sid",
-				Description: "The SID of the Account that created the resource.",
-				Type:        proto.ColumnType_STRING,
-			},
-			{
 				Name:        "address_requirements",
 				Description: "Indicates whether the phone number requires an address registered with Twilio, or not.",
 				Type:        proto.ColumnType_STRING,
@@ -211,11 +206,20 @@ func tableTwilioAccountIncomingPhoneNumber(_ context.Context) *plugin.Table {
 				Description: "The set of Boolean properties that indicate whether a phone number can receive calls or messages.",
 				Type:        proto.ColumnType_JSON,
 			},
+
+			// Steampipe standard columns
 			{
 				Name:        "title",
 				Description: "Title of the resource.",
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromField("FriendlyName"),
+			},
+
+			// Twilio standard columns
+			{
+				Name:        "account_sid",
+				Description: "The SID of the Account that created the resource.",
+				Type:        proto.ColumnType_STRING,
 			},
 		},
 	}

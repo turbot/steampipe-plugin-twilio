@@ -83,6 +83,8 @@ func tableTwilioAccount(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_JSON,
 				Transform:   transform.FromField("SubresourceUris"),
 			},
+
+			// Steampipe standard columns
 			{
 				Name:        "title",
 				Description: "Title of the resource.",

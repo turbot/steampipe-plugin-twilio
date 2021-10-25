@@ -42,11 +42,22 @@ func tableTwilioAccountKey(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_TIMESTAMP,
 				Transform:   transform.FromField("DateUpdated").Transform(ensureTimestamp),
 			},
+
+			// Steampipe standard columns
 			{
 				Name:        "title",
 				Description: "Title of the resource.",
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromField("FriendlyName"),
+			},
+
+			// Twilio standard columns
+			{
+				Name:        "account_sid",
+				Description: "The SID of the Account that created the resource.",
+				Type:        proto.ColumnType_STRING,
+				Hydrate:     plugin.HydrateFunc(getAccountSID).WithCache(),
+				Transform:   transform.FromValue(),
 			},
 		},
 	}

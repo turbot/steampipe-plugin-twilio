@@ -62,11 +62,6 @@ func tableTwilioAccountMessage(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 			},
 			{
-				Name:        "account_sid",
-				Description: "The SID of the Account that created the resource.",
-				Type:        proto.ColumnType_STRING,
-			},
-			{
 				Name:        "api_version",
 				Description: "The API version used to process the message.",
 				Type:        proto.ColumnType_STRING,
@@ -144,6 +139,13 @@ func tableTwilioAccountMessage(_ context.Context) *plugin.Table {
 				Description: "A list of related resources identified by their relative URIs.",
 				Type:        proto.ColumnType_JSON,
 				Transform:   transform.FromField("SubresourceUris"),
+			},
+
+			// Twilio standard columns
+			{
+				Name:        "account_sid",
+				Description: "The SID of the Account that created the resource.",
+				Type:        proto.ColumnType_STRING,
 			},
 		},
 	}

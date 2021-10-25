@@ -15,10 +15,10 @@ import (
 func tableTwilioChatServiceUser(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "twilio_chat_service_user",
-		Description: "Chat Service users in the Twilio account.",
+		Description: "Users within specified Chat Service in the Twilio account.",
 		List: &plugin.ListConfig{
-			Hydrate:       listChatServiceUsers,
-			ParentHydrate: listChatServices,
+			Hydrate:    listChatServiceUsers,
+			KeyColumns: plugin.SingleColumn("service_sid"),
 		},
 		Get: &plugin.GetConfig{
 			Hydrate:    getChatServiceUser,
@@ -48,11 +48,6 @@ func tableTwilioChatServiceUser(_ context.Context) *plugin.Table {
 			{
 				Name:        "service_sid",
 				Description: "The SID of the Service that the resource is associated with.",
-				Type:        proto.ColumnType_STRING,
-			},
-			{
-				Name:        "account_sid",
-				Description: "The SID of the Account that created the resource.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -95,11 +90,20 @@ func tableTwilioChatServiceUser(_ context.Context) *plugin.Table {
 				Description: "A list of absolute URLs of the Channel and Binding resources related to the user.",
 				Type:        proto.ColumnType_JSON,
 			},
+
+			// Steampipe standard columns
 			{
 				Name:        "title",
 				Description: "Title of the resource.",
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromField("FriendlyName"),
+			},
+
+			// Twilio standard columns
+			{
+				Name:        "account_sid",
+				Description: "The SID of the Account that created the resource.",
+				Type:        proto.ColumnType_STRING,
 			},
 		},
 	}
@@ -116,7 +120,12 @@ func listChatServiceUsers(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 	}
 
 	// Get Chat service details
-	chatServiceSid := h.Item.(openapi.ChatV2Service).Sid
+	chatServiceID := d.KeyColumnQuals["service_sid"].GetStringValue()
+
+	// No inputs
+	if chatServiceID == "" {
+		return nil, nil
+	}
 
 	req := &openapi.ListUserParams{}
 
@@ -132,7 +141,7 @@ func listChatServiceUsers(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 	}
 	req.SetLimit(maxResult)
 
-	resp, err := client.ChatV2.ListUser(*chatServiceSid, req)
+	resp, err := client.ChatV2.ListUser(chatServiceID, req)
 	if err != nil {
 		if handleListError(err) {
 			return nil, nil

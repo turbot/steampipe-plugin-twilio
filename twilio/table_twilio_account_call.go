@@ -88,11 +88,6 @@ func tableTwilioAccountCall(_ context.Context) *plugin.Table {
 				Transform:   transform.FromField("EndTime").Transform(ensureTimestamp),
 			},
 			{
-				Name:        "account_sid",
-				Description: "The SID of the Account that created the resource.",
-				Type:        proto.ColumnType_STRING,
-			},
-			{
 				Name:        "annotation",
 				Description: "The annotation provided for the call.",
 				Type:        proto.ColumnType_STRING,
@@ -189,6 +184,13 @@ func tableTwilioAccountCall(_ context.Context) *plugin.Table {
 				Description: "A list of related subresources identified by their relative URIs.",
 				Type:        proto.ColumnType_JSON,
 				Transform:   transform.FromField("SubresourceUris"),
+			},
+
+			// Twilio standard columns
+			{
+				Name:        "account_sid",
+				Description: "The SID of the Account that created the resource.",
+				Type:        proto.ColumnType_STRING,
 			},
 		},
 	}

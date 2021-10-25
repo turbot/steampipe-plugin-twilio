@@ -2,6 +2,8 @@
 
 The Twilio account key provides a powerful and flexible primitive for managing access to the Twilio API.
 
+**Note:** You must authenticate either using `Authorization Token`, or `Main API Keys` to query this table.
+
 ## Examples
 
 ### Basic info

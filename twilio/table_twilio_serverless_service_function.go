@@ -51,11 +51,6 @@ func tableTwilioServerlessServiceFunction(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_TIMESTAMP,
 			},
 			{
-				Name:        "account_sid",
-				Description: "The SID of the Account that created the function resource.",
-				Type:        proto.ColumnType_STRING,
-			},
-			{
 				Name:        "url",
 				Description: "The absolute URL of the function resource.",
 				Type:        proto.ColumnType_STRING,
@@ -65,11 +60,20 @@ func tableTwilioServerlessServiceFunction(_ context.Context) *plugin.Table {
 				Description: "A list of URLs of nested resources of the function resource.",
 				Type:        proto.ColumnType_JSON,
 			},
+
+			// Steampipe standard columns
 			{
 				Name:        "title",
 				Description: "Title of the resource.",
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromField("FriendlyName"),
+			},
+
+			// Twilio standard columns
+			{
+				Name:        "account_sid",
+				Description: "The SID of the Account that created the function resource.",
+				Type:        proto.ColumnType_STRING,
 			},
 		},
 	}

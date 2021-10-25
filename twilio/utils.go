@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/turbot/go-kit/types"
+	"github.com/turbot/steampipe-plugin-sdk/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/plugin/transform"
 )
 
@@ -30,4 +31,26 @@ func ensureTimestamp(ctx context.Context, d *transform.TransformData) (interface
 // NOTE: This handling can be removed once it gets handled by twilio-sdk
 func handleListError(err error) bool {
 	return strings.Contains(types.ToString(err), "could not retrieve payload from response")
+}
+
+// Get current Twilio account SID
+func getAccountSID(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+	cacheKey := "TwilioAccountSID"
+
+	// if found in cache, return the result
+	if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
+		return cachedData.(string), nil
+	}
+
+	client, err := getSessionConfig(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("getAccountSID", "connection_error", err)
+		return nil, err
+	}
+	accountSID := client.Client.AccountSid()
+
+	// save to extension cache
+	d.ConnectionManager.Cache.Set(cacheKey, accountSID)
+
+	return accountSID, nil
 }
