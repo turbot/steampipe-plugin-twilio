@@ -23,9 +23,10 @@ Run a query:
 
 ```sql
 select
-  friendly_name,
   sid,
-  date_created
+  friendly_name,
+  extract(day from now() - date_created) as age,
+  account_sid
 from
   twilio_account_key;
 ```

@@ -21,20 +21,20 @@ List all active phone numbers in your Twilio account:
 ```sql
 select
   sid,
-  phone_number,
-  status,
-  date_created,
+  friendly_name,
+  extract(day from now() - date_created) as age,
   account_sid
 from
-  twilio_account_incoming_phone_number;
+  twilio_account_key;
 ```
 
 ```
-+------------------------------------+--------------+--------+----------------------+------------------------------------+
-| sid                                | phone_number | status | date_created         | account_sid                        |
-+------------------------------------+--------------+--------+----------------------+------------------------------------+
-| PN91973970d5c9d01cf98068ad29bc4b72 | +13515239901 | in-use | 2021-10-18T11:09:48Z | ACe0ad2cff256c79c17a75fafd74ac483d |
-+------------------------------------+--------------+--------+----------------------+------------------------------------+
++------------------------------------+---------------+-----+------------------------------------+
+| sid                                | friendly_name | age | account_sid                        |
++------------------------------------+---------------+-----+------------------------------------+
+| SK1dd43df2cc722a368ab925c0642d7896 | dev-test      | 7   | ACe0ad3djf256b88c17e75fafd74ac483d |
+| SK31fccd42e0071567e86fee58ed433600 | test-main     | 7   | ACe0ad3djf256b88c17e75fafd74ac483d |
++------------------------------------+---------------+-----+------------------------------------+
 ```
 
 ## Documentation
@@ -142,24 +142,5 @@ connection "twilio_all" {
   type        = "aggregator"
   plugin      = "twilio"
   connections = ["twilio_*"]
-}
-```
-
-## Configuring Twilio Credentials
-
-### Credentials from Environment Variables
-
-The Twilio plugin will use the standard Twilio environment variables to obtain credentials **only if other arguments (`account_sid`, `api_key`, `api_secret`, `auth_token`) are not specified** in the connection:
-
-```sh
-export TWILIO_ACCOUNT_SID=<ACCOUNT_SID>
-export TWILIO_API_KEY=<YOUR_API_KEY>
-export TWILIO_API_SECRET=<YOUR_API_SECRET>
-export TWILIO_AUTH_TOKEN=<ACCOUNT_AUTH_TOKEN>
-```
-
-```hcl
-connection "twilio" {
-  plugin = "twilio"
 }
 ```
