@@ -35,3 +35,35 @@ from
 where
   friendly_name = 'MyApp';
 ```
+
+### List applications with caller ID lookup feature enabled
+
+```sql
+select
+  sid,
+  friendly_name,
+  sms_url,
+  voice_url,
+  voice_caller_id_lookup,
+  account_sid
+from
+  twilio_account_application
+where
+  voice_caller_id_lookup;
+```
+
+### List applications with no voice fallback URL configured
+
+```sql
+select
+  sid,
+  friendly_name,
+  sms_url,
+  voice_url,
+  voice_fallback_url,
+  account_sid
+from
+  twilio_account_application
+where
+  voice_fallback_url is null;
+```

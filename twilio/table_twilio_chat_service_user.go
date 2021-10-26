@@ -3,6 +3,7 @@ package twilio
 import (
 	"context"
 
+	twilioclient "github.com/twilio/twilio-go/client"
 	openapi "github.com/twilio/twilio-go/rest/chat/v2"
 
 	"github.com/turbot/steampipe-plugin-sdk/grpc/proto"
@@ -143,6 +144,10 @@ func listChatServiceUsers(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 
 	resp, err := client.ChatV2.ListUser(chatServiceID, req)
 	if err != nil {
+		twilioErr := err.(*twilioclient.TwilioRestError)
+		if twilioErr.Message == "Service instance not found" {
+			return nil, nil
+		}
 		if handleListError(err) {
 			return nil, nil
 		}

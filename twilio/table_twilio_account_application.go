@@ -131,7 +131,7 @@ func tableTwilioAccountApplication(_ context.Context) *plugin.Table {
 			// Twilio standard columns
 			{
 				Name:        "account_sid",
-				Description: "he SID of the Account that created the resource.",
+				Description: "The SID of the Account that created the resource.",
 				Type:        proto.ColumnType_STRING,
 			},
 		},

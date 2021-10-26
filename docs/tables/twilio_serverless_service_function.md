@@ -11,6 +11,7 @@ select
   sid,
   friendly_name,
   date_created,
+  service_sid,
   account_sid
 from
   twilio_serverless_service_function;

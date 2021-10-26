@@ -18,7 +18,9 @@ select
   is_online,
   account_sid
 from
-  twilio_chat_service_user;
+  twilio_chat_service_user
+where
+  service_sid = 'IS69abc66f24de48919638c0a0bfaf2a70';
 ```
 
 ### List all online users
@@ -34,7 +36,8 @@ select
 from
   twilio_chat_service_user
 where
-  is_online;
+  service_sid = 'IS69abc66f24de48919638c0a0bfaf2a70'
+  and is_online;
 ```
 
 ### List channel count per user
@@ -47,5 +50,7 @@ select
   joined_channels_count,
   account_sid
 from
-  twilio_chat_service_user;
+  twilio_chat_service_user
+where
+  service_sid = 'IS69abc66f24de48919638c0a0bfaf2a70';
 ```

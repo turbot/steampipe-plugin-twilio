@@ -10,9 +10,55 @@ Twilio Programmable Chat makes it easy for you to add chat features into your we
 select
   sid,
   friendly_name,
-  date_created,
   default_service_role_sid,
+  typing_indicator_timeout,
+  limits,
   account_sid
 from
   twilio_chat_service;
+```
+
+### List service with reachability indicator feature enabled
+
+```sql
+select
+  sid,
+  friendly_name,
+  reachability_enabled,
+  account_sid
+from
+  twilio_chat_service
+where
+  reachability_enabled;
+```
+
+### List service with consumption horizon feature enabled
+
+```sql
+select
+  sid,
+  friendly_name,
+  read_status_enabled,
+  account_sid
+from
+  twilio_chat_service
+where
+  read_status_enabled;
+```
+
+### Get user count by chat service
+
+```sql
+select
+  s.sid,
+  s.friendly_name,
+  count(u.sid)
+from
+  twilio_chat_service as s,
+  twilio_chat_service_user as u
+where
+  u.service_sid = s.sid
+group by
+  s.sid,
+  s.friendly_name;
 ```
