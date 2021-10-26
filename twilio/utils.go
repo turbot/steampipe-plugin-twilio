@@ -29,6 +29,7 @@ func ensureTimestamp(ctx context.Context, d *transform.TransformData) (interface
 
 // Paging library returns an error if there is no result
 // NOTE: This handling can be removed once it gets handled by twilio-sdk
+// https://github.com/twilio/twilio-go/issues/114
 func handleListError(err error) bool {
 	return strings.Contains(types.ToString(err), "could not retrieve payload from response")
 }
