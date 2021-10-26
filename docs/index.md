@@ -99,11 +99,14 @@ You may create multiple twilio connections:
 
 ```hcl
 connection "twilio_01" {
-  plugin  = "twilio"
+  plugin     = "twilio"
+  auth_token = "YOUR_AUTH_TOKEN"
 }
 
 connection "twilio_02" {
-  plugin  = "twilio"
+  plugin     = "twilio"
+  api_key    = "YOUR_API_KEY"
+  api_secret = "YOUR_API_SECRET"
 }
 ```
 
