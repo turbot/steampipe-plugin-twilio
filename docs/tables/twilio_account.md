@@ -10,16 +10,14 @@ Retrieves the list of account, along with any sub-accounts belonging to it.
 
 ```sql
 select
-  sid,
   friendly_name,
-  type,
   status,
   is_sub_account
 from
   twilio_account;
 ```
 
-### List trail accounts
+### List trial accounts
 
 ```sql
 select
