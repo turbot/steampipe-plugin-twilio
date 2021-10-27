@@ -40,7 +40,7 @@ where
   not verified;
 ```
 
-### List addresses used as emergency address
+### List emergency addresses
 
 ```sql
 select
