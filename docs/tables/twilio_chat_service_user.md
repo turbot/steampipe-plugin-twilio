@@ -2,7 +2,7 @@
 
 The User resource of Programmable Chat represents a single user who is identified by an identity value that you provide when the User resource is created. The User resource's identity must be unique within its Service instance.
 
-The `twilio_chat_service_user` table can be used to query users within a chat service, and **you must specify which chat service** with `where service_sid='IS69cdg66f24de48919638c0a0bfaf2a70'`.
+The `twilio_chat_service_user` table can be used to query users within a chat service, and **you must specify which chat service** with `where service_sid = 'IS69cdg66f24de48919638c0a0bfaf2a70'`.
 
 ## Examples
 
@@ -23,7 +23,7 @@ where
   service_sid = 'IS69abc66f24de48919638c0a0bfaf2a70';
 ```
 
-### List all online users
+### List online users
 
 ```sql
 select

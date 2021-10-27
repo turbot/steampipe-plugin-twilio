@@ -19,23 +19,6 @@ from
   twilio_account_application;
 ```
 
-### List applications by name
-
-```sql
-select
-  sid,
-  friendly_name,
-  sms_url,
-  sms_method,
-  voice_url,
-  voice_method,
-  account_sid
-from
-  twilio_account_application
-where
-  friendly_name = 'MyApp';
-```
-
 ### List applications with caller ID lookup feature enabled
 
 ```sql

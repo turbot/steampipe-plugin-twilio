@@ -34,7 +34,7 @@ where
   emergency_address_status = 'unregistered';
 ```
 
-### List all call logs for a phone number
+### List call logs for a phone number
 
 ```sql
 select

@@ -18,7 +18,7 @@ from
   twilio_chat_service;
 ```
 
-### List service with reachability indicator feature enabled
+### List services with reachability indicator enabled
 
 ```sql
 select
@@ -32,7 +32,7 @@ where
   reachability_enabled;
 ```
 
-### List service with consumption horizon feature enabled
+### List services with consumption horizon enabled
 
 ```sql
 select

@@ -19,7 +19,7 @@ from
   twilio_account_call;
 ```
 
-### List all outgoing calls
+### List outgoing calls
 
 ```sql
 select

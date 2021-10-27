@@ -1,6 +1,9 @@
 # Table: twilio_account_address
 
-An Address instance resource represents your or your customer’s physical location within a country. Around the world, some local authorities require the name and address of the user to be on file with Twilio to purchase and own a phone number.
+An Address instance resource represents your or your customer’s physical
+location within a country. Around the world, some local authorities require the
+name and address of the user to be on file with Twilio to purchase and own a
+phone number.
 
 ## Examples
 

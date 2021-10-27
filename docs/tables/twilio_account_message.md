@@ -18,7 +18,7 @@ from
   twilio_account_message;
 ```
 
-### List all outgoing messages
+### List outgoing messages
 
 ```sql
 select
