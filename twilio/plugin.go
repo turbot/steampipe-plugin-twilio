@@ -34,6 +34,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"twilio_messaging_service":             tableTwilioMessagingService(ctx),
 			"twilio_serverless_service":            tableTwilioServerlessService(ctx),
 			"twilio_serverless_service_function":   tableTwilioServerlessServiceFunction(ctx),
+			"twilio_account_bundles":               tableTwilioAccountBundles(ctx),
 		},
 	}
 
