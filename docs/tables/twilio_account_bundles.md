@@ -32,6 +32,8 @@ select
   regulation_sid, 
   url, 
   valid_until 
-from twilio.twilio_account_bundles 
-where status ='draft';
+from 
+  twilio_account_bundles;
+where 
+  status ='draft';
 ```

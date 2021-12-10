@@ -34,9 +34,10 @@ func tableTwilioAccountBundles(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 			},
 			{
-				Name:        "email",
-				Description: "The email address that will receive updates when the Bundle resource changes status.",
-				Type:        proto.ColumnType_STRING,
+				Name:        "date_created",
+				Description: "The date and time that the bundle was created.",
+				Type:        proto.ColumnType_TIMESTAMP,
+				Transform:   transform.FromField("DateCreated"),
 			},
 			{
 				Name:        "status",
@@ -44,13 +45,24 @@ func tableTwilioAccountBundles(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 			},
 			{
-				Name:        "status_callback",
-				Description: "The URL we call to inform your application of status changes.",
+				Name:        "date_updated",
+				Description: "The date and time that the bundle was last updated.",
+				Type:        proto.ColumnType_TIMESTAMP,
+				Transform:   transform.FromField("DateUpdated"),
+			},
+			{
+				Name:        "email",
+				Description: "The email address that will receive updates when the Bundle resource changes status.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "regulation_sid",
 				Description: "The unique string of a regulation that is associated to the Bundle resource.",
+				Type:        proto.ColumnType_STRING,
+			},
+			{
+				Name:        "status_callback",
+				Description: "The URL we call to inform your application of status changes.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -62,18 +74,6 @@ func tableTwilioAccountBundles(ctx context.Context) *plugin.Table {
 				Name:        "valid_until",
 				Description: "The date and time when the resource will be valid until. ",
 				Type:        proto.ColumnType_STRING,
-			},
-			{
-				Name:        "date_created",
-				Description: "The date and time that the bundle was created.",
-				Type:        proto.ColumnType_TIMESTAMP,
-				Transform:   transform.FromField("DateCreated"),
-			},
-			{
-				Name:        "date_updated",
-				Description: "The date and time that the bundle was last updated.",
-				Type:        proto.ColumnType_TIMESTAMP,
-				Transform:   transform.FromField("DateUpdated"),
 			},
 		},
 	}
