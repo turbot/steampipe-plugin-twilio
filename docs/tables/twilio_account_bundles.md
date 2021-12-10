@@ -18,7 +18,7 @@ select
   url, 
   valid_until 
 from 
-  twilio.twilio_account_bundles;
+  twilio_account_bundles;
 ```
 
 ### List bundles in draft status
