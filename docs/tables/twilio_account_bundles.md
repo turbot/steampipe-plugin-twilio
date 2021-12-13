@@ -1,4 +1,4 @@
-# Table: twilio_account_bundles
+# Table: twilio_account_bundle
 
 The Regulatory Bundles are Item Assignments of End-Users and Supporting Documents for regulatory compliance.
 
