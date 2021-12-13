@@ -10,7 +10,7 @@ import (
 	openapi "github.com/twilio/twilio-go/rest/numbers/v2"
 )
 
-func tableTwilioAccountBundles(ctx context.Context) *plugin.Table {
+func tableTwilioAccountBundle(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "twilio_account_bundles",
 		Description: "Bundle represents your or your customer’s Regulatory bundle",
