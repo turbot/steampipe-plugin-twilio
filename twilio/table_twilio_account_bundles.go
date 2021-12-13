@@ -72,7 +72,7 @@ func tableTwilioAccountBundle(ctx context.Context) *plugin.Table {
 			},
 			{
 				Name:        "valid_until",
-				Description: "The date and time when the resource will be valid until. ",
+				Description: "The date and time when the resource will be valid until.",
 				Type:        proto.ColumnType_STRING,
 			},
 		},
