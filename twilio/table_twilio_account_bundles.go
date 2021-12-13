@@ -101,7 +101,6 @@ func listAccountBundles(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 	req.SetLimit(maxResult)
 
 	resp, err := client.NumbersV2.StreamBundle(req)
-	fmt.Println(resp)
 	if err != nil {
 		if handleListError(err) {
 			return nil, nil
