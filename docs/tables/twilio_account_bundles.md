@@ -33,7 +33,7 @@ select
   url, 
   valid_until 
 from 
-  twilio_account_bundles;
+  twilio_account_bundle
 where 
   status ='draft';
 ```
