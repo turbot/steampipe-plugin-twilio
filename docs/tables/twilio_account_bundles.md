@@ -35,5 +35,5 @@ select
 from 
   twilio_account_bundle
 where 
-  status ='draft';
+  status = 'draft';
 ```
