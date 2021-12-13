@@ -9,7 +9,7 @@ import (
 	openapi "github.com/twilio/twilio-go/rest/numbers/v2"
 )
 
-func tableTwilioAccountBundle(ctx context.Context) *plugin.Table {
+func tableTwilioAccountBundles(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "twilio_account_bundle",
 		Description: "Bundle represents your or your customer’s Regulatory bundle",
@@ -33,10 +33,9 @@ func tableTwilioAccountBundle(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 			},
 			{
-				Name:        "date_created",
-				Description: "The date and time that the bundle was created.",
-				Type:        proto.ColumnType_TIMESTAMP,
-				Transform:   transform.FromField("DateCreated"),
+				Name:        "email",
+				Description: "The email address that will receive updates when the Bundle resource changes status.",
+				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "status",
@@ -44,24 +43,13 @@ func tableTwilioAccountBundle(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 			},
 			{
-				Name:        "date_updated",
-				Description: "The date and time that the bundle was last updated.",
-				Type:        proto.ColumnType_TIMESTAMP,
-				Transform:   transform.FromField("DateUpdated"),
-			},
-			{
-				Name:        "email",
-				Description: "The email address that will receive updates when the Bundle resource changes status.",
+				Name:        "status_callback",
+				Description: "The URL we call to inform your application of status changes.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "regulation_sid",
 				Description: "The unique string of a regulation that is associated to the Bundle resource.",
-				Type:        proto.ColumnType_STRING,
-			},
-			{
-				Name:        "status_callback",
-				Description: "The URL we call to inform your application of status changes.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -71,8 +59,20 @@ func tableTwilioAccountBundle(ctx context.Context) *plugin.Table {
 			},
 			{
 				Name:        "valid_until",
-				Description: "The date and time when the resource will be valid until.",
+				Description: "The date and time when the resource will be valid until. ",
 				Type:        proto.ColumnType_STRING,
+			},
+			{
+				Name:        "date_created",
+				Description: "The date and time that the bundle was created.",
+				Type:        proto.ColumnType_TIMESTAMP,
+				Transform:   transform.FromField("DateCreated"),
+			},
+			{
+				Name:        "date_updated",
+				Description: "The date and time that the bundle was last updated.",
+				Type:        proto.ColumnType_TIMESTAMP,
+				Transform:   transform.FromField("DateUpdated"),
 			},
 		},
 	}
