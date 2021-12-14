@@ -82,7 +82,7 @@ func listAccountBundles(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 	client, err := getSessionConfig(ctx, d)
 
 	if err != nil {
-		plugin.Logger(ctx).Error("regulatory_bundles.listBundles", "connection_error", err)
+		plugin.Logger(ctx).Error("listAccountBundles", "connection_error", err)
 		return nil, err
 	}
 	req := &openapi.ListBundleParams{}
