@@ -1,3 +1,15 @@
+## v0.1.0 [2021-12-15]
+
+_What's new?_
+
+- New tables added
+  - [twilio_account_bundle](https://hub.steampipe.io/plugins/turbot/twilio/tables/twilio_account_bundle) ([#5](https://github.com/turbot/steampipe-plugin-twilio/pull/5))
+
+_Enhancements_
+
+- Recompiled plugin with [steampipe-plugin-sdk-v1.8.2](https://github.com/turbot/steampipe-plugin-sdk/blob/main/CHANGELOG.md#v182--2021-11-22) ([#8](https://github.com/turbot/steampipe-plugin-twilio/pull/8))
+- Recompiled plugin with Go version 1.17 ([#8](https://github.com/turbot/steampipe-plugin-twilio/pull/8))
+
 ## v0.0.1 [2021-10-26]
 
 _What's new?_
