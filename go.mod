@@ -1,6 +1,6 @@
 module github.com/turbot/steampipe-plugin-twilio
 
-go 1.17
+go 1.18
 
 require (
 	github.com/turbot/go-kit v0.3.0
