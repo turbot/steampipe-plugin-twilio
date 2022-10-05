@@ -1,3 +1,9 @@
+## v0.3.1 [2022-10-05]
+
+_Bug fixes_
+
+- Fixed all tables not returning more than 50 results due to the max limit being set instead of page size.
+
 ## v0.3.0 [2022-09-09]
 
 _Dependencies_
