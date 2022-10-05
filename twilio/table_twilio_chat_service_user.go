@@ -131,17 +131,20 @@ func listChatServiceUsers(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 	req := &openapi.ListUserParams{}
 
 	// Retrieve the list of chat service users
-	maxResult := 50
+	// Twilio SDK defaults to 1000 as an efficient page size:
+	// https://github.com/twilio/twilio-go/blob/bf58569e99f043b8d1453a7d3812b5952bdda329/client/page_util.go#L17-L18
+	pageSize := 1000
 
 	// Reduce the basic request limit down if the user has only requested a small number of rows
 	limit := d.QueryContext.Limit
 	if d.QueryContext.Limit != nil {
-		if int(*limit) < maxResult {
-			maxResult = int(*limit)
+		if int(*limit) < pageSize {
+			pageSize = int(*limit)
 		}
 	}
-	req.SetLimit(maxResult)
+	req.SetPageSize(pageSize)
 
+	// Twilio SDK handles paging internally
 	resp, err := client.ChatV2.ListUser(chatServiceID, req)
 	if err != nil {
 		twilioErr := err.(*twilioclient.TwilioRestError)

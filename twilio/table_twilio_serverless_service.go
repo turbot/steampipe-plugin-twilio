@@ -106,17 +106,19 @@ func listServerlessServices(ctx context.Context, d *plugin.QueryData, _ *plugin.
 	req := &openapi.ListServiceParams{}
 
 	// Retrieve the list of serverless services
-	maxResult := 50
+	// Serverless API restricts max page size to 100
+	pageSize := 100
 
 	// Reduce the basic request limit down if the user has only requested a small number of rows
 	limit := d.QueryContext.Limit
 	if d.QueryContext.Limit != nil {
-		if int(*limit) < maxResult {
-			maxResult = int(*limit)
+		if int(*limit) < pageSize {
+			pageSize = int(*limit)
 		}
 	}
-	req.SetLimit(maxResult)
+	req.SetPageSize(pageSize)
 
+	// Twilio SDK handles paging internally
 	resp, err := client.ServerlessV1.ListService(req)
 	if err != nil {
 		if handleListError(err) {

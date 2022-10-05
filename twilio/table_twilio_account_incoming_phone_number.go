@@ -268,18 +268,21 @@ func listAccountIncomingPhoneNumbers(ctx context.Context, d *plugin.QueryData, _
 	}
 
 	// Retrieve the list of incoming phone numbers
-	maxResult := 50
+	// Twilio SDK defaults to 1000 as an efficient page size:
+	// https://github.com/twilio/twilio-go/blob/bf58569e99f043b8d1453a7d3812b5952bdda329/client/page_util.go#L17-L18
+	pageSize := 1000
 
 	// Reduce the basic request limit down if the user has only requested a small number of rows
 	limit := d.QueryContext.Limit
 	if d.QueryContext.Limit != nil {
-		if int(*limit) < maxResult {
-			maxResult = int(*limit)
+		if int(*limit) < pageSize {
+			pageSize = int(*limit)
 		}
 	}
-	req.SetLimit(maxResult)
+	req.SetPageSize(pageSize)
 
-	resp, err := client.ApiV2010.ListIncomingPhoneNumber(req)
+	// Twilio SDK handles paging internally
+	resp, err := client.Api.ListIncomingPhoneNumber(req)
 	if err != nil {
 		if handleListError(err) {
 			return nil, nil

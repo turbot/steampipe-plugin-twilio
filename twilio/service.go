@@ -59,8 +59,7 @@ func getSessionConfig(ctx context.Context, d *plugin.QueryData) (*twilio.RestCli
 		authToken = os.Getenv("TWILIO_AUTH_TOKEN")
 	}
 
-	
-	clientReq := twilio.RestClientParams{}
+	clientReq := twilio.ClientParams{}
 	if authToken != "" {
 		clientReq.Username = accountSid
 		clientReq.Password = authToken

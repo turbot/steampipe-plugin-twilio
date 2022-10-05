@@ -186,18 +186,21 @@ func listAccountMessages(ctx context.Context, d *plugin.QueryData, _ *plugin.Hyd
 	}
 
 	// Retrieve the list of messages
-	maxResult := 50
+	// Twilio SDK defaults to 1000 as an efficient page size:
+	// https://github.com/twilio/twilio-go/blob/bf58569e99f043b8d1453a7d3812b5952bdda329/client/page_util.go#L17-L18
+	pageSize := 1000
 
 	// Reduce the basic request limit down if the user has only requested a small number of rows
 	limit := d.QueryContext.Limit
 	if d.QueryContext.Limit != nil {
-		if int(*limit) < maxResult {
-			maxResult = int(*limit)
+		if int(*limit) < pageSize {
+			pageSize = int(*limit)
 		}
 	}
-	req.SetLimit(maxResult)
+	req.SetPageSize(pageSize)
 
-	resp, err := client.ApiV2010.ListMessage(req)
+	// Twilio SDK handles paging internally
+	resp, err := client.Api.ListMessage(req)
 	if err != nil {
 		if handleListError(err) {
 			return nil, nil
@@ -235,7 +238,7 @@ func getAccountMessage(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 		return nil, nil
 	}
 
-	resp, err := client.ApiV2010.FetchMessage(messageSid, &openapi.FetchMessageParams{})
+	resp, err := client.Api.FetchMessage(messageSid, &openapi.FetchMessageParams{})
 	if err != nil {
 		return nil, err
 	}

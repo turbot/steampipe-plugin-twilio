@@ -102,7 +102,7 @@ func listTwilioAccount(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 		return nil, err
 	}
 
-	resp, err := client.ApiV2010.FetchAccount(client.Client.AccountSid())
+	resp, err := client.Api.FetchAccount(client.Client.AccountSid())
 	if err != nil {
 		return nil, err
 	}
@@ -115,6 +115,7 @@ func listTwilioAccount(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 
 func checkTwilioSubAccount(_ context.Context, d *transform.TransformData) (interface{}, error) {
 	data := d.HydrateItem.(*openapi.ApiV2010Account)
+	//data := d.HydrateItem.(*twilio.Account)
 
 	return *data.OwnerAccountSid != *data.Sid, nil
 }
