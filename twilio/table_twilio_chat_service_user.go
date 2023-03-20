@@ -6,9 +6,9 @@ import (
 	twilioclient "github.com/twilio/twilio-go/client"
 	openapi "github.com/twilio/twilio-go/rest/chat/v2"
 
-	"github.com/turbot/steampipe-plugin-sdk/v4/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -121,7 +121,7 @@ func listChatServiceUsers(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 	}
 
 	// Get Chat service details
-	chatServiceID := d.KeyColumnQuals["service_sid"].GetStringValue()
+	chatServiceID := d.EqualsQuals["service_sid"].GetStringValue()
 
 	// No inputs
 	if chatServiceID == "" {
@@ -161,7 +161,7 @@ func listChatServiceUsers(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 		d.StreamListItem(ctx, user)
 
 		// Context can be cancelled due to manual cancellation or the limit has been hit
-		if d.QueryStatus.RowsRemaining(ctx) == 0 {
+		if d.RowsRemaining(ctx) == 0 {
 			return nil, nil
 		}
 	}
@@ -180,8 +180,8 @@ func getChatServiceUser(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 		plugin.Logger(ctx).Error("twilio_chat_service_user.getChatServiceUser", "connection_error", err)
 		return nil, err
 	}
-	sid := d.KeyColumnQuals["sid"].GetStringValue()
-	serviceSid := d.KeyColumnQuals["service_sid"].GetStringValue()
+	sid := d.EqualsQuals["sid"].GetStringValue()
+	serviceSid := d.EqualsQuals["service_sid"].GetStringValue()
 
 	// No inputs
 	if sid == "" && serviceSid == "" {
