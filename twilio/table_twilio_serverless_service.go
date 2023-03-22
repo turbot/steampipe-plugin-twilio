@@ -5,9 +5,9 @@ import (
 
 	openapi "github.com/twilio/twilio-go/rest/serverless/v1"
 
-	"github.com/turbot/steampipe-plugin-sdk/v4/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -131,7 +131,7 @@ func listServerlessServices(ctx context.Context, d *plugin.QueryData, _ *plugin.
 		d.StreamListItem(ctx, service)
 
 		// Context can be cancelled due to manual cancellation or the limit has been hit
-		if d.QueryStatus.RowsRemaining(ctx) == 0 {
+		if d.RowsRemaining(ctx) == 0 {
 			return nil, nil
 		}
 	}
@@ -150,7 +150,7 @@ func getServerlessService(ctx context.Context, d *plugin.QueryData, _ *plugin.Hy
 		plugin.Logger(ctx).Error("twilio_serverless_service.getServerlessService", "connection_error", err)
 		return nil, err
 	}
-	sid := d.KeyColumnQuals["sid"].GetStringValue()
+	sid := d.EqualsQuals["sid"].GetStringValue()
 
 	// No inputs
 	if sid == "" {

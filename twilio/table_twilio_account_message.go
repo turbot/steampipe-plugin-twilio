@@ -5,9 +5,9 @@ import (
 
 	openapi "github.com/twilio/twilio-go/rest/api/v2010"
 
-	"github.com/turbot/steampipe-plugin-sdk/v4/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -164,12 +164,12 @@ func listAccountMessages(ctx context.Context, d *plugin.QueryData, _ *plugin.Hyd
 	req := &openapi.ListMessageParams{}
 
 	// Additional filters
-	if d.KeyColumnQuals["sent_from"] != nil {
-		req.SetFrom(d.KeyColumnQuals["sent_from"].GetStringValue())
+	if d.EqualsQuals["sent_from"] != nil {
+		req.SetFrom(d.EqualsQuals["sent_from"].GetStringValue())
 	}
 
-	if d.KeyColumnQuals["sent_to"] != nil {
-		req.SetTo(d.KeyColumnQuals["sent_to"].GetStringValue())
+	if d.EqualsQuals["sent_to"] != nil {
+		req.SetTo(d.EqualsQuals["sent_to"].GetStringValue())
 	}
 
 	if d.Quals["date_sent"] != nil {
@@ -212,7 +212,7 @@ func listAccountMessages(ctx context.Context, d *plugin.QueryData, _ *plugin.Hyd
 		d.StreamListItem(ctx, message)
 
 		// Context can be cancelled due to manual cancellation or the limit has been hit
-		if d.QueryStatus.RowsRemaining(ctx) == 0 {
+		if d.RowsRemaining(ctx) == 0 {
 			return nil, nil
 		}
 	}
@@ -231,7 +231,7 @@ func getAccountMessage(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 		plugin.Logger(ctx).Error("twilio_account_message.getAccountMessage", "connection_error", err)
 		return nil, err
 	}
-	messageSid := d.KeyColumnQuals["sid"].GetStringValue()
+	messageSid := d.EqualsQuals["sid"].GetStringValue()
 
 	// No inputs
 	if messageSid == "" {

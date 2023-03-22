@@ -5,9 +5,9 @@ import (
 
 	openapi "github.com/twilio/twilio-go/rest/api/v2010"
 
-	"github.com/turbot/steampipe-plugin-sdk/v4/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -209,16 +209,16 @@ func listAccountCalls(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydrat
 	req := &openapi.ListCallParams{}
 
 	// Additional filters
-	if d.KeyColumnQuals["called_from"] != nil {
-		req.SetFrom(d.KeyColumnQuals["called_from"].GetStringValue())
+	if d.EqualsQuals["called_from"] != nil {
+		req.SetFrom(d.EqualsQuals["called_from"].GetStringValue())
 	}
 
-	if d.KeyColumnQuals["called_to"] != nil {
-		req.SetTo(d.KeyColumnQuals["called_to"].GetStringValue())
+	if d.EqualsQuals["called_to"] != nil {
+		req.SetTo(d.EqualsQuals["called_to"].GetStringValue())
 	}
 
-	if d.KeyColumnQuals["status"] != nil {
-		req.SetStatus(d.KeyColumnQuals["status"].GetStringValue())
+	if d.EqualsQuals["status"] != nil {
+		req.SetStatus(d.EqualsQuals["status"].GetStringValue())
 	}
 
 	if d.Quals["start_time"] != nil {
@@ -274,7 +274,7 @@ func listAccountCalls(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydrat
 		d.StreamListItem(ctx, call)
 
 		// Context can be cancelled due to manual cancellation or the limit has been hit
-		if d.QueryStatus.RowsRemaining(ctx) == 0 {
+		if d.RowsRemaining(ctx) == 0 {
 			return nil, nil
 		}
 	}
@@ -293,7 +293,7 @@ func getAccountCall(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateD
 		plugin.Logger(ctx).Error("twilio_account_call.getAccountCall", "connection_error", err)
 		return nil, err
 	}
-	callSid := d.KeyColumnQuals["sid"].GetStringValue()
+	callSid := d.EqualsQuals["sid"].GetStringValue()
 
 	// No inputs
 	if callSid == "" {

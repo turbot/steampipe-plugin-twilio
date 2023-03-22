@@ -5,9 +5,9 @@ import (
 
 	openapi "github.com/twilio/twilio-go/rest/api/v2010"
 
-	"github.com/turbot/steampipe-plugin-sdk/v4/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -238,20 +238,20 @@ func listAccountIncomingPhoneNumbers(ctx context.Context, d *plugin.QueryData, _
 	req := &openapi.ListIncomingPhoneNumberParams{}
 
 	// Additional filters
-	if d.KeyColumnQuals["friendly_name"] != nil {
-		req.SetFriendlyName(d.KeyColumnQuals["friendly_name"].GetStringValue())
+	if d.EqualsQuals["friendly_name"] != nil {
+		req.SetFriendlyName(d.EqualsQuals["friendly_name"].GetStringValue())
 	}
 
-	if d.KeyColumnQuals["origin"] != nil {
-		req.SetOrigin(d.KeyColumnQuals["origin"].GetStringValue())
+	if d.EqualsQuals["origin"] != nil {
+		req.SetOrigin(d.EqualsQuals["origin"].GetStringValue())
 	}
 
-	if d.KeyColumnQuals["phone_number"] != nil {
-		req.SetPhoneNumber(d.KeyColumnQuals["phone_number"].GetStringValue())
+	if d.EqualsQuals["phone_number"] != nil {
+		req.SetPhoneNumber(d.EqualsQuals["phone_number"].GetStringValue())
 	}
 
-	if d.KeyColumnQuals["beta"] != nil {
-		req.SetBeta(d.KeyColumnQuals["beta"].GetBoolValue())
+	if d.EqualsQuals["beta"] != nil {
+		req.SetBeta(d.EqualsQuals["beta"].GetBoolValue())
 	}
 
 	// Non-Equals Qual Map handling
@@ -294,7 +294,7 @@ func listAccountIncomingPhoneNumbers(ctx context.Context, d *plugin.QueryData, _
 		d.StreamListItem(ctx, ph)
 
 		// Context can be cancelled due to manual cancellation or the limit has been hit
-		if d.QueryStatus.RowsRemaining(ctx) == 0 {
+		if d.RowsRemaining(ctx) == 0 {
 			return nil, nil
 		}
 	}
