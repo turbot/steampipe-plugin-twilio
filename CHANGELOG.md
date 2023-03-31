@@ -1,3 +1,10 @@
+## v0.5.0 [2023-03-31]
+
+_What's new?_
+
+- New tables added
+  - [twilio_account_balance](https://hub.steampipe.io/plugins/turbot/twilio/tables/twilio_account_balance) ([#19](https://github.com/turbot/steampipe-plugin-twilio/pull/19)) (Thanks [@reva](https://github.com/reva) for the contribution!)
+
 ## v0.4.0 [2023-03-22]
 
 _Dependencies_
