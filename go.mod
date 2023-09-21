@@ -3,7 +3,7 @@ module github.com/turbot/steampipe-plugin-twilio
 go 1.19
 
 require (
-	github.com/turbot/go-kit v0.6.0
+	github.com/turbot/go-kit v0.8.1
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.5.1
 	github.com/twilio/twilio-go v0.26.0
 )
