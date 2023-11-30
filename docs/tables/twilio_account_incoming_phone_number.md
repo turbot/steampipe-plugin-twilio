@@ -1,10 +1,20 @@
-# Table: twilio_account_incoming_phone_number
+---
+title: "Steampipe Table: twilio_account_incoming_phone_number - Query Twilio Incoming Phone Numbers using SQL"
+description: "Allows users to query Incoming Phone Numbers in Twilio, providing details such as phone number, capabilities, status, etc."
+---
 
-An incoming phone number instance resource represents a Twilio phone number provisioned from Twilio, ported or hosted to Twilio.
+# Table: twilio_account_incoming_phone_number - Query Twilio Incoming Phone Numbers using SQL
+
+Twilio Incoming Phone Numbers are unique phone numbers that are assigned to your Twilio account. These numbers can be used to make and receive calls and text messages. They come with various features and capabilities, such as voice, fax, SMS, and MMS.
+
+## Table Usage Guide
+
+The `twilio_account_incoming_phone_number` table provides insights into the incoming phone numbers associated with your Twilio account. As a developer or a system administrator, you can use this table to retrieve detailed information about each phone number, including its capabilities (voice, fax, SMS, MMS), status, and more. This information can be useful for managing and monitoring your communication capabilities with Twilio.
 
 ## Examples
 
 ### Basic info
+Explore which phone numbers are associated with your Twilio account, identify their current status, and gain insights into when they were created. This is useful for managing and tracking your Twilio resources effectively.
 
 ```sql
 select
@@ -19,6 +29,7 @@ from
 ```
 
 ### List phone numbers with no emergency address registered
+Identify phone numbers that have not registered an emergency address. This is useful for ensuring that all numbers are properly set up for emergency situations.
 
 ```sql
 select
@@ -35,6 +46,7 @@ where
 ```
 
 ### List call logs for a phone number
+Gain insights into the completed calls associated with a specific phone number, including details such as the caller, receiver, timing, duration, and cost. This can be particularly useful for tracking communication patterns, monitoring costs, or identifying potential misuse of services.
 
 ```sql
 select

@@ -1,10 +1,20 @@
-# Table: twilio_account_application
+---
+title: "Steampipe Table: twilio_account_application - Query Twilio Account Applications using SQL"
+description: "Allows users to query Twilio Account Applications, specifically the application details and related metadata, providing insights into application configurations and settings."
+---
 
-An Application instance resource represents an application that you have created with Twilio. An application inside of Twilio is a set of URLs and other configuration data that tells Twilio how to behave when one of your Twilio numbers receives a call or SMS message.
+# Table: twilio_account_application - Query Twilio Account Applications using SQL
+
+Twilio Account Applications represent the settings and configurations for a specific application in Twilio. It encapsulates the behavior you’d like your call to exhibit once it’s connected. This includes things like the URL of the script you’d like to run, whether to record the calls, and whether to record the calls as mono or dual-channel.
+
+## Table Usage Guide
+
+The `twilio_account_application` table provides insights into application settings within Twilio. As a DevOps engineer, explore application-specific details through this table, including URLs of the scripts to run, recording preferences, and channel settings. Utilize it to uncover information about applications, such as those with specific configurations, the behavior of calls once connected, and the verification of application settings.
 
 ## Examples
 
 ### Basic info
+Explore which Twilio applications are currently linked to your account, with a focus on understanding how each application is configured for sending SMS and voice messages. This can be useful for auditing communication settings and ensuring the correct methods are in place.
 
 ```sql
 select
@@ -20,6 +30,7 @@ from
 ```
 
 ### List applications with caller ID lookup feature enabled
+Gain insights into the applications that have the caller ID lookup feature enabled. This can be useful for auditing purposes, ensuring that the feature is only activated for the intended applications.
 
 ```sql
 select
@@ -36,6 +47,7 @@ where
 ```
 
 ### List applications with no voice fallback URL configured
+Discover which applications lack a configured voice fallback URL. This can help in identifying potential communication gaps in your Twilio account, ensuring that all applications have a fallback option for voice services.
 
 ```sql
 select
