@@ -11,6 +11,9 @@ Twilio Account Keys are secure, revocable keys that are used to authenticate API
 
 The `twilio_account_key` table provides insights into Twilio Account Keys. As a developer or system administrator, you can explore detailed information about each key, including its creation date, last update date, and status. This table is particularly useful for managing and auditing the use of API keys in your Twilio account.
 
+**Important Notes**
+- You must authenticate using either an [Auth Token](https://www.twilio.com/console) or a [Main API Key](https://www.twilio.com/docs/iam/keys/api-key) to query this table.
+
 ## Examples
 
 ### Basic info

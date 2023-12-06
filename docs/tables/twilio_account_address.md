@@ -11,6 +11,9 @@ Twilio Account Addresses are resources within Twilio that contain the physical a
 
 The `twilio_account_address` table provides insights into the physical addresses associated with a Twilio account. As a DevOps engineer, you can explore address-specific details through this table, including the customer's address or the business's address associated with the Twilio account. Utilize it to uncover information about addresses for regulatory compliance and emergency services purposes.
 
+**Important Notes**
+- You must authenticate using either an [Auth Token](https://www.twilio.com/console) or a [Main API Key](https://www.twilio.com/docs/iam/keys/api-key) to query this table.
+
 ## Examples
 
 ### Basic info

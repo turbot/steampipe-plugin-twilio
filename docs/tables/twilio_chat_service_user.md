@@ -11,6 +11,9 @@ Twilio Chat Service Users are entities within Twilio's Chat Service that represe
 
 The `twilio_chat_service_user` table provides insights into users within Twilio's Chat Service. As an application developer or system administrator, you can explore user-specific details through this table, including their roles, identities, and other associated metadata. Utilize it to uncover information about users, such as their participation in different chat services, their roles within these services, and the management of their identities.
 
+**Important Notes**
+- You must specify the `service_sid` in the `where` clause to query this table.
+
 ## Examples
 
 ### Basic info
