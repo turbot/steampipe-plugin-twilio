@@ -16,7 +16,19 @@ The `twilio_chat_service` table provides insights into each chat service within 
 ### Basic info
 Gain insights into the specific chat services within your Twilio account, including their unique identifiers and associated roles, to better understand and manage your communication services. This could be particularly useful for auditing purposes or for streamlining your chat services.
 
-```sql
+```sql+postgres
+select
+  sid,
+  friendly_name,
+  default_service_role_sid,
+  typing_indicator_timeout,
+  limits,
+  account_sid
+from
+  twilio_chat_service;
+```
+
+```sql+sqlite
 select
   sid,
   friendly_name,
@@ -31,7 +43,7 @@ from
 ### List services with reachability indicator enabled
 Explore which chat services have the reachability indicator enabled. This can help you identify services where users are notified of their message's delivery status, enhancing communication efficiency.
 
-```sql
+```sql+postgres
 select
   sid,
   friendly_name,
@@ -43,10 +55,22 @@ where
   reachability_enabled;
 ```
 
+```sql+sqlite
+select
+  sid,
+  friendly_name,
+  reachability_enabled,
+  account_sid
+from
+  twilio_chat_service
+where
+  reachability_enabled = 1;
+```
+
 ### List services with consumption horizon enabled
 Explore which chat services have the consumption horizon feature enabled. This query is useful in identifying services that allow users to track the last read message, enhancing user experience by keeping track of conversation progress.
 
-```sql
+```sql+postgres
 select
   sid,
   friendly_name,
@@ -58,10 +82,22 @@ where
   read_status_enabled;
 ```
 
+```sql+sqlite
+select
+  sid,
+  friendly_name,
+  read_status_enabled,
+  account_sid
+from
+  twilio_chat_service
+where
+  read_status_enabled = 1;
+```
+
 ### Get user count by chat service
 Explore which chat services have the most users to understand their popularity and usage trends. This can help in allocating resources effectively or planning targeted promotions.
 
-```sql
+```sql+postgres
 select
   s.sid,
   s.friendly_name,
@@ -71,6 +107,20 @@ from
   twilio_chat_service_user as u
 where
   u.service_sid = s.sid
+group by
+  s.sid,
+  s.friendly_name;
+```
+
+```sql+sqlite
+select
+  s.sid,
+  s.friendly_name,
+  count(u.sid)
+from
+  twilio_chat_service as s
+join
+  twilio_chat_service_user as u on u.service_sid = s.sid
 group by
   s.sid,
   s.friendly_name;

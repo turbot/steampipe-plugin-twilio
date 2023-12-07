@@ -16,7 +16,19 @@ The `twilio_account_incoming_phone_number` table provides insights into the inco
 ### Basic info
 Explore which phone numbers are associated with your Twilio account, identify their current status, and gain insights into when they were created. This is useful for managing and tracking your Twilio resources effectively.
 
-```sql
+```sql+postgres
+select
+  sid,
+  friendly_name,
+  phone_number,
+  status,
+  date_created,
+  account_sid
+from
+  twilio_account_incoming_phone_number;
+```
+
+```sql+sqlite
 select
   sid,
   friendly_name,
@@ -31,7 +43,21 @@ from
 ### List phone numbers with no emergency address registered
 Identify phone numbers that have not registered an emergency address. This is useful for ensuring that all numbers are properly set up for emergency situations.
 
-```sql
+```sql+postgres
+select
+  sid,
+  friendly_name,
+  phone_number,
+  status,
+  date_created,
+  account_sid
+from
+  twilio_account_incoming_phone_number
+where
+  emergency_address_status = 'unregistered';
+```
+
+```sql+sqlite
 select
   sid,
   friendly_name,
@@ -48,7 +74,28 @@ where
 ### List call logs for a phone number
 Gain insights into the completed calls associated with a specific phone number, including details such as the caller, receiver, timing, duration, and cost. This can be particularly useful for tracking communication patterns, monitoring costs, or identifying potential misuse of services.
 
-```sql
+```sql+postgres
+select
+  c.called_from as caller,
+  c.called_to as receiver,
+  c.start_time,
+  c.end_time,
+  c.duration,
+  c.price,
+  c.price_unit,
+  c.account_sid
+from
+  twilio_account_call as c,
+  twilio_account_incoming_phone_number as ph
+where
+  c.status = 'completed'
+  and (
+    ph.phone_number = c.called_to
+    or ph.phone_number = c.called_from
+  );
+```
+
+```sql+sqlite
 select
   c.called_from as caller,
   c.called_to as receiver,

@@ -16,9 +16,16 @@ The `twilio_account_balance` table provides insights into the current balance an
 ### Fetch the balance
 Discover the current balance in your Twilio account, expressed in the appropriate currency. This can be useful for monitoring your usage and expenses in real time.
 
-```sql
+```sql+postgres
 select
   concat(balance, ' ', currency) as balance_formatted
+from
+  twilio_account_balance;
+```
+
+```sql+sqlite
+select
+  balance || ' ' || currency as balance_formatted
 from
   twilio_account_balance;
 ```

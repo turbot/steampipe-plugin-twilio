@@ -16,7 +16,18 @@ The `twilio_serverless_service` table provides insights into Twilio Serverless S
 ### Basic info
 Discover the segments that have been created on the Twilio Serverless Service platform, including their names and creation dates. This query is useful for gaining insights into the services' setup and their associated account IDs without needing to dive into credential details.
 
-```sql
+```sql+postgres
+select
+  sid,
+  friendly_name,
+  date_created,
+  include_credentials,
+  account_sid
+from
+  twilio_serverless_service;
+```
+
+```sql+sqlite
 select
   sid,
   friendly_name,
@@ -30,7 +41,7 @@ from
 ### List services not editable via UI
 Determine the services that cannot be modified through the user interface. This can be useful in identifying services that may require manual intervention or additional permissions for modifications.
 
-```sql
+```sql+postgres
 select
   sid,
   friendly_name,
@@ -41,4 +52,17 @@ from
   twilio_serverless_service
 where
   not ui_editable;
+```
+
+```sql+sqlite
+select
+  sid,
+  friendly_name,
+  date_created,
+  include_credentials,
+  account_sid
+from
+  twilio_serverless_service
+where
+  ui_editable = 0;
 ```

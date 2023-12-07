@@ -16,7 +16,16 @@ The `twilio_account` table provides insights into the Twilio Accounts. As a deve
 ### Basic info
 Explore which Twilio accounts are sub-accounts and their current status. This is useful to understand the hierarchy and health of your Twilio account setup.
 
-```sql
+```sql+postgres
+select
+  friendly_name,
+  status,
+  is_sub_account
+from
+  twilio_account;
+```
+
+```sql+sqlite
 select
   friendly_name,
   status,
@@ -28,7 +37,20 @@ from
 ### List trial accounts
 Discover the segments that are utilizing trial accounts in your Twilio services. This can help assess the elements within your business that are testing or experimenting with Twilio's features, aiding in resource allocation and strategic planning.
 
-```sql
+```sql+postgres
+select
+  sid,
+  friendly_name,
+  type,
+  status,
+  is_sub_account
+from
+  twilio_account
+where
+  type = 'Trial';
+```
+
+```sql+sqlite
 select
   sid,
   friendly_name,

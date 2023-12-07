@@ -16,7 +16,19 @@ The `twilio_account_message` table provides insights into individual messages se
 ### Basic info
 Explore which messages were sent in what direction and their status to gain insights into communication patterns and potential issues. This can be useful in assessing the effectiveness of communication strategies and identifying areas for improvement.
 
-```sql
+```sql+postgres
+select
+  sid,
+  sent_to,
+  direction,
+  status,
+  date_sent,
+  account_sid
+from
+  twilio_account_message;
+```
+
+```sql+sqlite
 select
   sid,
   sent_to,
@@ -31,7 +43,21 @@ from
 ### List outgoing messages
 Explore the history of outgoing messages sent through your account. This can be useful for tracking communication patterns, identifying potential issues, or auditing message activity.
 
-```sql
+```sql+postgres
+select
+  sid,
+  sent_to,
+  direction,
+  status,
+  date_sent,
+  account_sid
+from
+  twilio_account_message
+where
+  direction = 'outbound-api';
+```
+
+```sql+sqlite
 select
   sid,
   sent_to,
@@ -48,7 +74,21 @@ where
 ### List undelivered messages
 Discover the segments that contain undelivered messages to understand potential communication gaps or issues within your system. This can be particularly useful in troubleshooting or improving customer communication strategies.
 
-```sql
+```sql+postgres
+select
+  sid,
+  sent_to,
+  direction,
+  status,
+  date_sent,
+  account_sid
+from
+  twilio_account_message
+where
+  status <> 'delivered';
+```
+
+```sql+sqlite
 select
   sid,
   sent_to,

@@ -16,7 +16,20 @@ The `twilio_account_application` table provides insights into application settin
 ### Basic info
 Explore which Twilio applications are currently linked to your account, with a focus on understanding how each application is configured for sending SMS and voice messages. This can be useful for auditing communication settings and ensuring the correct methods are in place.
 
-```sql
+```sql+postgres
+select
+  sid,
+  friendly_name,
+  sms_url,
+  sms_method,
+  voice_url,
+  voice_method,
+  account_sid
+from
+  twilio_account_application;
+```
+
+```sql+sqlite
 select
   sid,
   friendly_name,
@@ -32,7 +45,7 @@ from
 ### List applications with caller ID lookup feature enabled
 Gain insights into the applications that have the caller ID lookup feature enabled. This can be useful for auditing purposes, ensuring that the feature is only activated for the intended applications.
 
-```sql
+```sql+postgres
 select
   sid,
   friendly_name,
@@ -46,10 +59,38 @@ where
   voice_caller_id_lookup;
 ```
 
+```sql+sqlite
+select
+  sid,
+  friendly_name,
+  sms_url,
+  voice_url,
+  voice_caller_id_lookup,
+  account_sid
+from
+  twilio_account_application
+where
+  voice_caller_id_lookup = 1;
+```
+
 ### List applications with no voice fallback URL configured
 Discover which applications lack a configured voice fallback URL. This can help in identifying potential communication gaps in your Twilio account, ensuring that all applications have a fallback option for voice services.
 
-```sql
+```sql+postgres
+select
+  sid,
+  friendly_name,
+  sms_url,
+  voice_url,
+  voice_fallback_url,
+  account_sid
+from
+  twilio_account_application
+where
+  voice_fallback_url is null;
+```
+
+```sql+sqlite
 select
   sid,
   friendly_name,

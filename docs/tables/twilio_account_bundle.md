@@ -16,9 +16,22 @@ The `twilio_account_bundle` table provides insights into account bundles within 
 ### Basic info
 Explore which Twilio account bundles are active and when they will expire. This can help in managing and optimizing your Twilio services effectively.
 
-```sql
+```sql+postgres
 select 
   sid
+  account_sid, 
+  friendly_name, 
+  email, 
+  regulation_sid, 
+  url, 
+  valid_until 
+from 
+  twilio_account_bundle;
+```
+
+```sql+sqlite
+select 
+  sid,
   account_sid, 
   friendly_name, 
   email, 
@@ -32,9 +45,24 @@ from
 ### List bundles in draft status
 Discover the segments that contain draft status bundles in your Twilio account. This is useful for assessing which bundles are yet to be finalized and may require further editing or approval.
 
-```sql
+```sql+postgres
 select 
   sid
+  account_sid, 
+  friendly_name, 
+  email, 
+  regulation_sid, 
+  url, 
+  valid_until 
+from 
+  twilio_account_bundle
+where 
+  status = 'draft';
+```
+
+```sql+sqlite
+select 
+  sid,
   account_sid, 
   friendly_name, 
   email, 

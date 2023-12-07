@@ -19,7 +19,22 @@ The `twilio_account_address` table provides insights into the physical addresses
 ### Basic info
 Explore which Twilio account addresses have been validated. This can help identify instances where incorrect or incomplete information has been provided, allowing for necessary corrections and updates to ensure accurate communication.
 
-```sql
+```sql+postgres
+select
+  sid,
+  friendly_name,
+  customer_name,
+  validated,
+  street,
+  city,
+  region,
+  postal_code,
+  account_sid
+from
+  twilio_account_address;
+```
+
+```sql+sqlite
 select
   sid,
   friendly_name,
@@ -37,7 +52,7 @@ from
 ### List unverified addresses
 Discover the segments that contain unverified addresses within customer accounts. This is particularly useful for identifying potential inaccuracies or inconsistencies in your customer data.
 
-```sql
+```sql+postgres
 select
   sid,
   friendly_name,
@@ -54,10 +69,27 @@ where
   not verified;
 ```
 
+```sql+sqlite
+select
+  sid,
+  friendly_name,
+  customer_name,
+  verified,
+  street,
+  city,
+  region,
+  postal_code,
+  account_sid
+from
+  twilio_account_address
+where
+  verified = 0;
+```
+
 ### List emergency addresses
 Explore which accounts have emergency addresses enabled to ensure rapid response capabilities in critical situations. This can be particularly beneficial in managing risk and improving safety measures.
 
-```sql
+```sql+postgres
 select
   sid,
   friendly_name,
@@ -72,4 +104,21 @@ from
   twilio_account_address
 where
   emergency_enabled;
+```
+
+```sql+sqlite
+select
+  sid,
+  friendly_name,
+  customer_name,
+  emergency_enabled,
+  street,
+  city,
+  region,
+  postal_code,
+  account_sid
+from
+  twilio_account_address
+where
+  emergency_enabled = 1;
 ```

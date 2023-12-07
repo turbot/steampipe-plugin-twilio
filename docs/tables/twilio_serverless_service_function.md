@@ -16,7 +16,18 @@ The `twilio_serverless_service_function` table provides insights into Serverless
 ### Basic info
 Discover the segments that have been recently created within your Twilio Serverless service functions. This enables you to analyze the settings to understand which functions are associated with a specific service and account.
 
-```sql
+```sql+postgres
+select
+  sid,
+  friendly_name,
+  date_created,
+  service_sid,
+  account_sid
+from
+  twilio_serverless_service_function;
+```
+
+```sql+sqlite
 select
   sid,
   friendly_name,

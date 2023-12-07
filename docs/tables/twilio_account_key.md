@@ -19,7 +19,16 @@ The `twilio_account_key` table provides insights into Twilio Account Keys. As a 
 ### Basic info
 Determine the areas in which your Twilio account keys were created to manage and track their usage over time. This aids in understanding the account key's lifecycle and ensuring their optimal utilization.
 
-```sql
+```sql+postgres
+select
+  sid,
+  friendly_name,
+  date_created
+from
+  twilio_account_key;
+```
+
+```sql+sqlite
 select
   sid,
   friendly_name,
@@ -31,7 +40,7 @@ from
 ### List keys older than 90 days
 Explore which Twilio account keys are older than 90 days to ensure timely key rotation and enhance security measures. This is useful in maintaining good security practices and avoiding potential vulnerabilities due to outdated keys.
 
-```sql
+```sql+postgres
 select
   sid,
   friendly_name,
@@ -41,4 +50,16 @@ from
   twilio_account_key
 where
   extract(day from current_timestamp - date_created) > 90;
+```
+
+```sql+sqlite
+select
+  sid,
+  friendly_name,
+  date_created,
+  julianday('now') - julianday(date_created) as age
+from
+  twilio_account_key
+where
+  julianday('now') - julianday(date_created) > 90;
 ```

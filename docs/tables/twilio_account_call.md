@@ -16,7 +16,20 @@ The `twilio_account_call` table provides insights into individual call details w
 ### Basic info
 Gain insights into the direction and status of calls made through a specific account, including when each call started and ended. This can help in tracking call activities and understanding call patterns for customer service improvement.
 
-```sql
+```sql+postgres
+select
+  sid,
+  called_to,
+  direction,
+  status,
+  start_time,
+  end_time,
+  account_sid
+from
+  twilio_account_call;
+```
+
+```sql+sqlite
 select
   sid,
   called_to,
@@ -32,7 +45,22 @@ from
 ### List outgoing calls
 Analyze the details of outgoing calls made via an application's API, providing insights into call statuses and durations, which can be useful for assessing call performance and usage patterns.
 
-```sql
+```sql+postgres
+select
+  sid,
+  called_to,
+  direction,
+  status,
+  start_time,
+  end_time,
+  account_sid
+from
+  twilio_account_call
+where
+  direction = 'outbound-api';
+```
+
+```sql+sqlite
 select
   sid,
   called_to,
@@ -50,7 +78,22 @@ where
 ### List unsuccessful calls
 Explore which calls were unsuccessful to identify potential issues with your telecommunication system. This can help in troubleshooting and improving the overall call success rate.
 
-```sql
+```sql+postgres
+select
+  sid,
+  called_to,
+  direction,
+  status,
+  start_time,
+  end_time,
+  account_sid
+from
+  twilio_account_call
+where
+  status = 'failed';
+```
+
+```sql+sqlite
 select
   sid,
   called_to,

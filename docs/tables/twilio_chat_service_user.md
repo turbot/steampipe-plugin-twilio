@@ -19,7 +19,22 @@ The `twilio_chat_service_user` table provides insights into users within Twilio'
 ### Basic info
 Discover the segments that have been created within a specific chat service, including their status and creation date. This can be particularly useful in identifying active users and understanding the overall usage patterns of the service.
 
-```sql
+```sql+postgres
+select
+  sid,
+  friendly_name,
+  identity,
+  service_sid,
+  date_created,
+  is_online,
+  account_sid
+from
+  twilio_chat_service_user
+where
+  service_sid = 'IS69abc66f24de48919638c0a0bfaf2a70';
+```
+
+```sql+sqlite
 select
   sid,
   friendly_name,
@@ -37,7 +52,22 @@ where
 ### List online users
 Explore which users are currently online in a particular chat service. This can be particularly useful for real-time user engagement or to monitor active participation within a specific chat service.
 
-```sql
+```sql+postgres
+select
+  distinct sid,
+  friendly_name,
+  identity,
+  service_sid,
+  is_online,
+  account_sid
+from
+  twilio_chat_service_user
+where
+  service_sid = 'IS69abc66f24de48919638c0a0bfaf2a70'
+  and is_online;
+```
+
+```sql+sqlite
 select
   distinct sid,
   friendly_name,
@@ -55,7 +85,20 @@ where
 ### List channel count per user
 Analyze the settings to understand the distribution of chat channels for each user within a specific service. This can be useful for identifying user engagement and managing resource allocation.
 
-```sql
+```sql+postgres
+select
+  distinct sid,
+  friendly_name,
+  identity,
+  joined_channels_count,
+  account_sid
+from
+  twilio_chat_service_user
+where
+  service_sid = 'IS69abc66f24de48919638c0a0bfaf2a70';
+```
+
+```sql+sqlite
 select
   distinct sid,
   friendly_name,
