@@ -8,6 +8,7 @@ short_name: "twilio"
 description: "Steampipe plugin to query calls, messages and other communication functions from your Twilio project."
 og_description: "Query Twilio with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/twilio-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # Twilio + Steampipe
