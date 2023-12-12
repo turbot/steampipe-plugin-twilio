@@ -8,13 +8,14 @@ short_name: "twilio"
 description: "Steampipe plugin to query calls, messages and other communication functions from your Twilio project."
 og_description: "Query Twilio with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/twilio-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # Twilio + Steampipe
 
 [Twilio](https://www.twilio.com) is a cloud communications platform, offering developers to programmatically make and receive phone calls, send and receive text messages, and perform other communication functions using its web service APIs.
 
-[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+[Steampipe](https://steampipe.io) is an open-source zero-ETL engine to instantly query cloud APIs using SQL.
 
 List all active phone numbers in your Twilio account:
 
@@ -87,11 +88,6 @@ connection "twilio" {
   # api_secret = "YOUR_API_SECRET"
 }
 ```
-
-## Get involved
-
-- Open source: https://github.com/turbot/steampipe-plugin-twilio
-- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
 
 ## Multi-Account Connections
 
