@@ -15,7 +15,7 @@ engines: ["steampipe", "sqlite", "postgres", "export"]
 
 [Twilio](https://www.twilio.com) is a cloud communications platform, offering developers to programmatically make and receive phone calls, send and receive text messages, and perform other communication functions using its web service APIs.
 
-[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+[Steampipe](https://steampipe.io) is an open-source zero-ETL engine to instantly query cloud APIs using SQL.
 
 List all active phone numbers in your Twilio account:
 
