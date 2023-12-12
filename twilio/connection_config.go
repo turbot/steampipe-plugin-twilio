@@ -2,29 +2,13 @@ package twilio
 
 import (
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/schema"
 )
 
 type twilioConfig struct {
-	AccountSid *string `cty:"account_sid"`
-	AuthToken  *string `cty:"auth_token"`
-	ApiKey     *string `cty:"api_key"`
-	ApiSecret  *string `cty:"api_secret"`
-}
-
-var ConfigSchema = map[string]*schema.Attribute{
-	"account_sid": {
-		Type: schema.TypeString,
-	},
-	"auth_token": {
-		Type: schema.TypeString,
-	},
-	"api_key": {
-		Type: schema.TypeString,
-	},
-	"api_secret": {
-		Type: schema.TypeString,
-	},
+	AccountSid *string `hcl:"account_sid"`
+	AuthToken  *string `hcl:"auth_token"`
+	ApiKey     *string `hcl:"api_key"`
+	ApiSecret  *string `hcl:"api_secret"`
 }
 
 func ConfigInstance() interface{} {
