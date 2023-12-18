@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/turbot/go-kit v0.9.0-rc.1
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.8.0
-	github.com/twilio/twilio-go v0.26.0
+	github.com/twilio/twilio-go v1.16.0
 )
 
 require (
