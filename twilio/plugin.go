@@ -20,6 +20,12 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
 			NewInstance: ConfigInstance,
 		},
+		ConnectionKeyColumns: []plugin.ConnectionKeyColumn{
+			{
+				Name:    "account_sid",
+				Hydrate: getAccountSID,
+			},
+		},
 		TableMap: map[string]*plugin.Table{
 			"twilio_account":                       tableTwilioAccount(ctx),
 			"twilio_account_address":               tableTwilioAccountAddress(ctx),

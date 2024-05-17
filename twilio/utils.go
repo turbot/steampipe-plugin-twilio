@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/turbot/go-kit/types"
+	"github.com/turbot/steampipe-plugin-sdk/v5/memoize"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
@@ -34,14 +35,23 @@ func handleListError(err error) bool {
 	return strings.Contains(types.ToString(err), "could not retrieve payload from response")
 }
 
-// Get current Twilio account SID
-func getAccountSID(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	cacheKey := "TwilioAccountSID"
+// if the caching is required other than per connection, build a cache key for the call and use it in Memoize.
+var getAccountSidMemoized = plugin.HydrateFunc(getAccountSIDUncached).Memoize(memoize.WithCacheKeyFunction(getAccountSidCacheKey))
 
-	// if found in cache, return the result
-	if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
-		return cachedData.(string), nil
-	}
+// declare a wrapper hydrate function to call the memoized function
+// - this is required when a memoized function is used for a column definition
+func getAccountSID(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	return getAccountSidMemoized(ctx, d, h)
+}
+
+// Build a cache key for the call to getAccountSidCacheKey.
+func getAccountSidCacheKey(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	key := "getAccountSid"
+	return key, nil
+}
+
+// Get current Twilio account SID
+func getAccountSIDUncached(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 
 	client, err := getSessionConfig(ctx, d)
 	if err != nil {
@@ -49,9 +59,6 @@ func getAccountSID(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDa
 		return nil, err
 	}
 	accountSID := client.Client.AccountSid()
-
-	// save to extension cache
-	d.ConnectionManager.Cache.Set(cacheKey, accountSID)
 
 	return accountSID, nil
 }
