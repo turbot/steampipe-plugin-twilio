@@ -56,7 +56,7 @@ func tableTwilioAccountKey(_ context.Context) *plugin.Table {
 				Name:        "account_sid",
 				Description: "The SID of the Account that created the resource.",
 				Type:        proto.ColumnType_STRING,
-				Hydrate:     plugin.HydrateFunc(getAccountSID).WithCache(),
+				Hydrate:     getAccountSID,
 				Transform:   transform.FromValue(),
 			},
 		},

@@ -88,6 +88,15 @@ func tableTwilioAccount(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromField("FriendlyName"),
 			},
+
+			// Twilio standard columns
+			{
+				Name:        "account_sid",
+				Description: "The SID of the Account that created the resource.",
+				Type:        proto.ColumnType_STRING,
+				Hydrate:     getAccountSID,
+				Transform:   transform.FromValue(),
+			},
 		},
 	}
 }
