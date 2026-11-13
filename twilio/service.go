@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 	"github.com/twilio/twilio-go"
 )
 
@@ -13,7 +13,7 @@ import (
 func getSessionConfig(ctx context.Context, d *plugin.QueryData) (*twilio.RestClient, error) {
 	// Load clientOptions from cache
 	sessionCacheKey := "twilio.clientoption"
-	if cachedData, ok := d.ConnectionManager.Cache.Get(sessionCacheKey); ok {
+	if cachedData, ok := d.ConnectionCache.Get(ctx, sessionCacheKey); ok {
 		return cachedData.(*twilio.RestClient), nil
 	}
 
@@ -79,7 +79,9 @@ func getSessionConfig(ctx context.Context, d *plugin.QueryData) (*twilio.RestCli
 	client := twilio.NewRestClientWithParams(clientReq)
 
 	// save clientOptions in cache
-	d.ConnectionManager.Cache.Set(sessionCacheKey, client)
+	if err := d.ConnectionCache.Set(ctx, sessionCacheKey, client); err != nil {
+		plugin.Logger(ctx).Warn("getSessionConfig", "cache_set_error", err)
+	}
 
 	return client, nil
 }
